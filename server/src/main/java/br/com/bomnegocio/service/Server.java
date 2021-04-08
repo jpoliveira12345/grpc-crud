@@ -22,12 +22,15 @@ public class Server extends HouseServiceGrpc.HouseServiceImplBase {
     // Database
     Map<Int64Value, House> houses = new HashMap<>();
 
+    // Exception
+    private static final String EXCEPTION_MESSAGE = "House not found!!!";
+
     @Override
     public void getHouse(Int64Value id, StreamObserver<House> responseObserver) {
         var house = houses.get(id);
         if( Objects.isNull(house) ) {
             RuntimeException ex = Status.NOT_FOUND
-                    .withDescription("House not found!!!")
+                    .withDescription(EXCEPTION_MESSAGE)
                     .asRuntimeException();
             responseObserver.onError(ex);
         }
@@ -56,7 +59,7 @@ public class Server extends HouseServiceGrpc.HouseServiceImplBase {
         var house = houses.remove(id);
         if( Objects.isNull(house) ) {
             RuntimeException ex = Status.NOT_FOUND
-                    .withDescription("House not found!!!")
+                    .withDescription(EXCEPTION_MESSAGE)
                     .asRuntimeException();
             responseObserver.onError(ex);
         }
@@ -83,14 +86,14 @@ public class Server extends HouseServiceGrpc.HouseServiceImplBase {
     }
 
     @Override
-    public StreamObserver<House> findFirst(StreamObserver<House> responseObserver) {
+    public StreamObserver<Int64Value> findFirst(StreamObserver<House> responseObserver) {
         return new StreamObserver<>() {
             @Override
             //Quando o cliente envia dados
-            public void onNext(House h) {
+            public void onNext(Int64Value id) {
                 var housesList = new ArrayList<>(houses.values());
                 for( var house : housesList){
-                    if(house.getId().equals(h.getId())){
+                    if(house.getId().equals(id)){
                         responseObserver.onNext(house);
                         responseObserver.onCompleted();
                     }
@@ -106,7 +109,7 @@ public class Server extends HouseServiceGrpc.HouseServiceImplBase {
             // Quando o cliente faz um commit
             public void onCompleted() {
                 RuntimeException ex = Status.NOT_FOUND
-                        .withDescription("House not found!!!")
+                        .withDescription(EXCEPTION_MESSAGE)
                         .asRuntimeException();
                 responseObserver.onError(ex);
             }
