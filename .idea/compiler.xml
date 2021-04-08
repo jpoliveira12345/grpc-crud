@@ -8,12 +8,21 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="imobiliaria-bom-negocio" />
+        <module name="client" />
+        <module name="server" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="grpc-crud" target="11" />
+      <module name="imobiliaria" target="11" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="client" options="-parameters" />
+      <module name="grpc-crud" options="-parameters" />
       <module name="imobiliaria-bom-negocio" options="-parameters" />
+      <module name="server" options="-parameters" />
     </option>
   </component>
 </project>

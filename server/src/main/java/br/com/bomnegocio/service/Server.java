@@ -9,12 +9,15 @@ import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import org.lognet.springboot.grpc.GRpcService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 @GRpcService
 @SuppressWarnings("unused")
-public class HouseService extends HouseServiceGrpc.HouseServiceImplBase {
+public class Server extends HouseServiceGrpc.HouseServiceImplBase {
 
     // Database
     Map<Int64Value, House> houses = new HashMap<>();
