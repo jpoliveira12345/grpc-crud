@@ -8,14 +8,14 @@ import "google/protobuf/wrappers.proto";
 import "google/protobuf/empty.proto";
 
 service HouseService {
-  rpc getHouse      (google.protobuf.Int64Value)  returns (House);
-  rpc createHouse   (House)                       returns (House);
-  rpc changeHouse   (House)                       returns (House);
-  rpc deleteHouse   (google.protobuf.Int64Value)  returns (House);
+  rpc getHouse      (google.protobuf.Int64Value)        returns (House);
+  rpc createHouse   (House)                             returns (House);
+  rpc changeHouse   (House)                             returns (House);
+  rpc deleteHouse   (google.protobuf.Int64Value)        returns (House);
 
-  rpc findAll       (google.protobuf.Empty)       returns (stream House);
-  rpc findFirst     (stream House)                returns (House);
-  rpc createAll     (stream House)                returns (stream House);
+  rpc findAll       (google.protobuf.Empty)             returns (stream House);
+  rpc findFirst     (stream google.protobuf.Int64Value) returns (House);
+  rpc createAll     (stream House)                      returns (stream House);
 }
 
 message House {
